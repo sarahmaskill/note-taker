@@ -14,8 +14,9 @@ currentID = notes.length;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 app.use(express.static('public'));
+
+app.get('/api/notes', (req, res) => res.status(200).json(notes)) 
 
 // pull home page
 app.get('/', (req, res) =>
@@ -33,7 +34,6 @@ app.get('*', (req, res) =>
 );
 
 //API ROUTES
-app.get('/api/notes', (req, res) => res.json(notes));
 
 app.post("/api/notes", (req, res) => {
     var newNote = req.body;
@@ -55,15 +55,6 @@ function newNotes() {
     });
 }
 
-// * `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
-app.get('/api/notes', (req, res) => {
-    // Send a message to the client
-    res.json(`${req.method} request received to get notes`);
-  
-    // Log our request to the terminal
-    console.info(`${req.method} request received to get notes`);
-  });
-  
 app.listen(PORT, () => {
   console.log(`Note Taker listening at http://localhost:${PORT}`);
 });
